@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import axios from 'axios';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const API_URL =  process.env.API_URL ||'http://localhost:8000';
 
-export default function ResetPassword() {
+function ResetPasswordContent() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -121,5 +121,16 @@ export default function ResetPassword() {
         </form>
       </div>
     </div>
+  );
+}
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex justify-center items-center bg-background">
+        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }
