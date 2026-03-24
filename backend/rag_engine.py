@@ -3,12 +3,16 @@ import time
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_pinecone import PineconeVectorStore
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from pinecone import Pinecone, ServerlessSpec
 
 class RAGSystem:
     def __init__(self, pinecone_api_key=None, index_name=None):
-        self.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        hf_token = os.getenv("HF_TOKEN")
+        self.embeddings = HuggingFaceEndpointEmbeddings(
+            huggingfacehub_api_token=hf_token,
+            model="sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+        )
         self.vector_db = None
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
@@ -112,7 +116,13 @@ class RAGSystem:
             if not self.load_index():
                 return []
         
-        return self.vector_db.similarity_search(query, k=k)
+        try:
+            results = self.vector_db.similarity_search(query, k=k)
+            print(f"DEBUG: Pinecone search returned {len(results)} chunks.")
+            return results
+        except Exception as e:
+            print(f"SYSTEM_ERROR: Pinecone search failed: {e}")
+            return []
 
     def save_index(self, folder_path=None):
         """

@@ -28,7 +28,8 @@ import tempfile
 import re
 import json
 
-from supabase import create_client
+# from supabase import create_client (Legacy code removed)
+
 
 load_dotenv()
 
@@ -319,6 +320,10 @@ async def chat(request: ChatRequest, current_user: UserInDB = Depends(get_curren
 
     # Retrieve context
     context_chunks = rag_system.retrieve(request.message)
+    print(f"DEBUG: Found {len(context_chunks)} relevant context chunks for query: '{request.message}'")
+    
+    if not context_chunks:
+        print("WARNING: No context chunks found. Gemini will answer without the legal database context.")
 
 
 
