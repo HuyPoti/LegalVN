@@ -1,34 +1,36 @@
-# ⚖️ LegalBot - Trợ Lý Pháp Luật Thông Minh (RAG-Based)
+# ⚖️ LegalBot - Intelligent Legal Assistant (RAG-Based)
 
-LegalBot là một hệ thống chatbot tư vấn pháp luật dành riêng cho luật pháp Việt Nam. Sử dụng công nghệ **RAG (Retrieval-Augmented Generation)** kết hợp với mô hình ngôn ngữ **Google Gemini**, hệ thống cung cấp các câu trả lời chính xác dựa trên cơ sở dữ liệu văn bản luật chính thống.
+[Tiếng Việt](./README_VN.md) | **English**
 
----
-
-## 🚀 Tính Năng Chính
-
-### 💬 Dành cho Người Dùng (Users)
-- **Tư vấn pháp luật 24/7:** Giải đáp các thắc mắc về dân sự, hình sự, lao động, đất đai...
-- **Truy xuất nguồn tham khảo:** Mỗi câu trả lời đi kèm với trích dẫn từ văn bản luật cụ thể (Tên file, nội dung gốc).
-- **Lịch sử trò chuyện:** Lưu trữ và xem lại các phiên tư vấn cũ.
-- **Mã hóa API Key:** Cho phép người dùng sử dụng API Key Gemini cá nhân để dùng không giới hạn (đã được mã hóa an toàn).
-- **Hệ thống Premium:** Giới hạn lượt dùng hàng ngày cho người dùng miễn phí, yêu cầu nâng cấp để sử dụng không giới hạn.
-- **Xác thực tài khoản:** Đăng ký và xác thực qua Email tự động.
-
-### 🛡️ Dành cho Quản Trị Viên (Admin)
-- **Quản lý tri thức (Knowledge Base):** Upload tài liệu pháp luật (PDF, TXT) trực tiếp lên Vector Database (Pinecone).
-- **Quản lý người dùng:** Duyệt yêu cầu nâng cấp Premium, khóa/mở khóa tài khoản.
-- **Cấu hình hệ thống:** Tùy chỉnh API Key Pinecone và Index ngay trên Dashboard.
-- **Quản lý dữ liệu:** Xóa hoặc cập nhật các tệp tin trong cơ sở dữ liệu RAG.
+LegalBot is a legal consultation chatbot system specifically designed for Vietnamese law. Using **RAG (Retrieval-Augmented Generation)** technology combined with the **Google Gemini** language model, the system provides accurate answers based on official legal document databases.
 
 ---
 
-## 🛠️ Công Nghệ Sử Dụng (Tech Stack)
+## 🚀 Key Features
+
+### 💬 For Users
+- **24/7 Legal Consultation:** Answer queries about civil, criminal, labor, land laws, etc.
+- **Reference Retrieval:** Each answer comes with citations from specific legal documents (File name, original content).
+- **Chat History:** Store and review past consultation sessions.
+- **API Key Encryption:** Allows users to use personal Gemini API Keys safely for unlimited usage.
+- **Premium System:** Daily usage limits for free users, with upgrade requests for unlimited access.
+- **Account Verification:** Automated registration and verification via Email.
+
+### 🛡️ For Administrators (Admin)
+- **Knowledge Base Management:** Upload legal documents (PDF, TXT) directly to the Vector Database (Pinecone).
+- **User Management:** Approve Premium upgrade requests, lock/unlock accounts.
+- **System Configuration:** Customize Pinecone API Key and Index directly on the Dashboard.
+- **Data Management:** Delete or update files in the RAG database.
+
+---
+
+## 🛠️ Tech Stack
 
 ### Backend
 - **Framework:** FastAPI (Python 3.10+)
 - **LLM:** Google Gemini AI
-- **Vector Database:** Pinecone (Lưu trữ và tìm kiếm vector)
-- **Database:** MongoDB (Lưu trữ thông tin người dùng và lịch sử chat)
+- **Vector Database:** Pinecone (Vector storage and search)
+- **Database:** MongoDB (User info and chat history storage)
 - **Authentication:** JWT (JSON Web Token) & OAuth2
 - **Email Service:** SMTP (Gmail)
 
@@ -41,10 +43,10 @@ LegalBot là một hệ thống chatbot tư vấn pháp luật dành riêng cho 
 
 ---
 
-## ⚙️ Cấu Hình Hệ Thống
+## ⚙️ System Configuration
 
 ### 1. Backend Environment (`backend/.env`)
-Tạo file `.env` trong thư mục `backend/` và cấu hình các biến sau:
+Create a `.env` file in the `backend/` directory and configure the following variables:
 ```env
 # MongoDB Connection
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/your-db-name
@@ -68,67 +70,67 @@ API_URL=http://localhost:10000
 ```
 
 ### 2. Frontend Environment (`frontend/.env.local`)
-Tạo file `.env.local` trong thư mục `frontend/` và cấu hình:
+Create a `.env.local` file in the `frontend/` directory and configure:
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:10000
 ```
 
 ---
 
-## 📦 Hướng Dẫn Cài Đặt
+## 📦 Installation Guide
 
-### Bước 1: Clone dự án
+### Step 1: Clone the project
 ```bash
 git clone https://github.com/HuyPoti/LegalVN.git
 cd Legal-Consultation-Chatbot-VN
 ```
 
-### Bước 2: Cài đặt Backend
+### Step 2: Backend Setup
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # Trên Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python main.py
 ```
 
-### Bước 3: Cài đặt Frontend
+### Step 3: Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Truy cập: `http://localhost:3000` để bắt đầu.
+Visit: `http://localhost:3000` to get started.
 
 ---
 
-## 📂 Cấu Trúc Thư Mục
+## 📂 Project Structure
 ```text
 LegalVN/
 ├── backend/
 │   ├── main.py           # Entry point (FastAPI)
-│   ├── rag_engine.py      # Logic xử lý RAG & Pinecone
-│   ├── chatbot.py        # Tích hợp Gemini LLM
-│   ├── models.py         # schemas Pydantic & MongoDB
-│   ├── auth.py           # Xử lý JWT & Authentication
-│   └── email_utils.py    # Gửi mail xác thực/reset pass
+│   ├── rag_engine.py      # RAG logic & Pinecone handling
+│   ├── chatbot.py        # Gemini LLM integration
+│   ├── models.py         # Pydantic schemas & MongoDB
+│   ├── auth.py           # JWT & Authentication handling
+│   └── email_utils.py    # Verification/Reset password emails
 ├── frontend/
 │   ├── app/              # Next.js App Router
-│   │   ├── admin/        # Giao diện quản trị
-│   │   ├── chat/         # Giao diện hội thoại
-│   │   ├── signup/       # Đăng ký
-│   │   └── verify-email/ # Xác thực tài khoản
-│   └── components/       # Các UI components dùng chung
+│   │   ├── admin/        # Admin interface
+│   │   ├── chat/         # Chat interface
+│   │   ├── signup/       # Signup
+│   │   └── verify-email/ # Account verification
+│   └── components/       # Shared UI components
 └── README.md
 ```
 
 ---
 
-## 🔒 Bảo Mật & Lưu Ý
-- Thông tin nhạy cảm (API Keys) của người dùng được mã hóa bằng **Fernet (Cryptography)** trước khi lưu vào database.
-- Không chia sẻ file `.env` lên Github (đã cấu hình `.gitignore`).
+## 🔒 Security & Notes
+- Sensitive information (User API Keys) is encrypted using **Fernet (Cryptography)** before being saved to the database.
+- Do not share the `.env` file on Github (`.gitignore` is already configured).
 
 ---
-**Phát triển bởi [HuyPoti](https://github.com/HuyPoti)**  
-*Dự án phục vụ mục đích học tập và tư vấn pháp luật cơ bản.*
+**Developed by [HuyPoti](https://github.com/HuyPoti)**  
+*This project is for educational purposes and basic legal consultation.*
